@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
 
 const themes = [
   { key: "research", label: "研究", emoji: "🧪" },

@@ -1,8 +1,6 @@
 "use client";
-import { useState } from "react";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
 
 const eventData: Record<string, { title: string; desc: string; img: string }[]> = {
   research: [
@@ -33,13 +31,6 @@ export default function ThemePage() {
   const themeParam = (params as { theme?: string | string[] }).theme;
   const theme = Array.isArray(themeParam) ? themeParam[0] : themeParam ?? "";
   const events = eventData[theme] || [];
-  const [selected, setSelected] = useState<number[]>([]);
-
-  const toggleSelect = (idx: number) => {
-    setSelected((prev) =>
-      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
-    );
-  };
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-emerald-100 via-teal-100 to-green-200 p-4">
@@ -49,7 +40,7 @@ export default function ThemePage() {
           {events.map((ev, idx) => (
             <div
               key={idx}
-              className={`relative rounded-xl border overflow-hidden shadow-sm transition-colors cursor-pointer ${selected.includes(idx) ? "bg-pink-200 border-pink-400" : "bg-white hover:bg-pink-100 border-gray-200"}`}
+              className={`relative rounded-xl border overflow-hidden shadow-sm transition-colors cursor-pointer`}
             >
               <img src={ev.img} alt={ev.title} className="w-full h-24 object-cover" />
               <div className="p-2">
@@ -62,11 +53,6 @@ export default function ThemePage() {
                   このイベントを予約する
                 </Button>
               </div>
-              {selected.includes(idx) && (
-                <span className="absolute top-2 right-2 text-pink-500 bg-white rounded-full p-1">
-                  <Check size={18} />
-                </span>
-              )}
             </div>
           ))}
         </div>
