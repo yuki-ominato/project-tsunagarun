@@ -118,5 +118,103 @@
   }
   body {
     @apply bg-background text-foreground;
+    min-height: 100vh;
+  }
+}
+
+body, .layout {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 50%, #6ee7b7 100%);
+}
+
+.sidebar-left,
+.sidebar-right,
+.main-content {
+  background: transparent;
+}
+
+.layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 100vh;
+  gap: 32px;
+}
+
+.sidebar-left,
+.sidebar-right {
+  width: 220px;
+  min-width: 160px;
+  max-width: 260px;
+  padding: 24px 12px;
+  height: fit-content;
+  background: transparent;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 600px;
+  padding: 32px 0;
+  background: transparent;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    flex-direction: column;
+    gap: 0;
+  }
+  .sidebar-left,
+  .sidebar-right {
+    display: none;
+  }
+  .main-content {
+    max-width: 100%;
+    padding: 16px 0;
+  }
+}
+
+.scrollable-sidebar {
+  height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrollable-main {
+  height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dark body, .dark .layout {
+  background: linear-gradient(135deg, #232946 0%, #059669 100%);
+}
+
+.dark .main-content, .dark .sidebar-left, .dark .sidebar-right {
+  background: transparent;
+}
+
+/* ダークモード用の背景グラデーション */
+.dark body {
+  background: #15202b;
+}
+
+/* レスポンシブな中央寄せ用のクラス例 */
+.responsive-container {
+  width: 90%;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+@media (max-width: 600px) {
+  .responsive-container {
+    width: 98%;
+    margin: 8px auto;
+    padding: 12px;
+    border-radius: 0;
+    box-shadow: none;
   }
 }
