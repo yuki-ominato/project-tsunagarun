@@ -28,6 +28,22 @@ export default function Home() {
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-emerald-100 via-teal-100 to-green-200 p-0">
       <div className="w-full max-w-2xl mx-auto pt-16">
         <h1 className="text-3xl font-extrabold text-teal-700 text-center mb-2 tracking-tight drop-shadow">興味テーマを選択</h1>
+        <div className="flex justify-center gap-4 mb-6">
+          <Button
+            className="h-10 px-6 border border-teal-200 text-teal-700 bg-white hover:bg-teal-50 shadow transition-colors flex items-center gap-2"
+            variant="ghost"
+            onClick={() => router.push("/mypage")}
+          >
+            <User className="mr-1 h-5 w-5" />マイページへ
+          </Button>
+          <Button
+            className="h-10 px-6 border border-teal-200 text-teal-700 bg-white hover:bg-teal-50 shadow transition-colors flex items-center gap-2"
+            variant="ghost"
+            onClick={() => router.push("/")}
+          >
+            トップへ
+          </Button>
+        </div>
         <p className="text-center text-gray-600 mb-8">気になるテーマを選んで、同じ興味を持つ仲間とつながろう！</p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 mb-10">
           {themes.map((theme) => (
@@ -48,13 +64,6 @@ export default function Home() {
             </Card>
           ))}
         </div>
-        <Button
-          className="w-full h-12 text-lg mt-2 border border-teal-200 text-teal-700 bg-white hover:bg-teal-50 shadow transition-colors flex items-center justify-center gap-2"
-          variant="ghost"
-          onClick={() => router.push("/mypage")}
-        >
-          <User className="mr-1 h-5 w-5" />マイページへ
-        </Button>
       </div>
     </div>
   );

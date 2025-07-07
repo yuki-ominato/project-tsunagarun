@@ -29,7 +29,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(({ className, size,
 Avatar.displayName = "Avatar"
 
 function AvatarImage({ className, alt = "avatar", ...props }: React.ComponentProps<typeof Image>) {
-  return <Image className={cn("aspect-square h-full w-full", className)} alt={alt} {...props} />;
+  return <Image className={cn("aspect-square h-full w-full", className)} alt={alt} {...props} height={160} width={400}/>;
 }
 
 const AvatarFallback = React.forwardRef<

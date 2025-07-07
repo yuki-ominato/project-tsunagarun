@@ -4,9 +4,10 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Calendar, Users, Star, Sparkles, CheckCircle2 } from "lucide-react";
+import { Calendar, Users, Star, Sparkles, CheckCircle2, XCircle } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
+import { useReservedEvents } from "@/context/ReservedEventsContext";
 
 const eventData: Record<string, { title: string; desc: string; img: string; date: string; people: number; }[]> = {
   research: [
@@ -38,23 +39,46 @@ const badges = [
   { label: "初参加歓迎", color: "bg-blue-400" },
 ];
 
+function hashString(str: string): number {
+  let hash = 0, i, chr;
+  if (str.length === 0) return hash;
+  for (i = 0; i < str.length; i++) {
+    chr = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
+    hash |= 0;
+  }
+  return Math.abs(hash);
+}
+
 export default function ThemePage() {
   const params = useParams();
   const themeParam = (params as { theme?: string | string[] }).theme;
   const theme = Array.isArray(themeParam) ? themeParam[0] : themeParam ?? "";
   const events = eventData[theme] || [];
   const [toast, setToast] = useState<string | null>(null);
+  const { addReservedEvent, removeReservedEvent, reservedEvents } = useReservedEvents();
 
-  function handleReserve(title: string) {
-    setToast(`${title} の予約が完了しました！`);
+  function handleReserve(ev: typeof events[number]) {
+    addReservedEvent({
+      id: hashString(`${theme}-${ev.title}-${ev.date}`),
+      title: ev.title,
+      date: ev.date,
+      image: ev.img,
+    });
+    setToast(`${ev.title} の予約が完了しました！`);
     setTimeout(() => setToast(null), 2000);
+  }
+
+  function isReserved(ev: typeof events[number]) {
+    const id = hashString(`${theme}-${ev.title}-${ev.date}`);
+    return reservedEvents.some(e => e.id === id);
   }
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-emerald-100 via-teal-100 to-green-200 p-0">
       <div className="w-full max-w-2xl mx-auto pt-12">
         <h1 className="text-2xl font-extrabold text-teal-700 text-center mb-6 tracking-tight drop-shadow">開催予定イベント</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 mx-4">
           {events.map((ev, idx) => {
             const badge = badges[idx % badges.length];
             return (
@@ -86,20 +110,29 @@ export default function ThemePage() {
                   </div>
                 </CardContent>
                 <CardFooter className="px-4 pb-4">
-                  <Button
-                    className="w-full h-10 text-base bg-pink-500 hover:bg-pink-600 shadow-lg flex items-center gap-2"
-                    onClick={() => handleReserve(ev.title)}
-                  >
-                    <CheckCircle2 className="h-5 w-5" /> このイベントを予約する
-                  </Button>
+                  {isReserved(ev) ? (
+                    <Button
+                      className="w-full h-10 text-base bg-gray-200 hover:bg-red-100 text-red-600 shadow flex items-center gap-2"
+                      variant="outline"
+                      onClick={() => removeReservedEvent(hashString(`${theme}-${ev.title}-${ev.date}`))}
+                    >
+                      <XCircle className="h-5 w-5" /> 予約キャンセル
+                    </Button>
+                  ) : (
+                    <Button
+                      className="w-full h-10 text-base bg-pink-500 hover:bg-pink-600 shadow-lg flex items-center gap-2"
+                      onClick={() => handleReserve(ev)}
+                    >
+                      <CheckCircle2 className="h-5 w-5" /> このイベントを予約する
+                    </Button>
+                  )}
                 </CardFooter>
               </Card>
             );
           })}
         </div>
-        <Button className="w-full h-12 text-lg bg-teal-500 hover:bg-teal-600 shadow mb-2">次へ</Button>
         <a href="/home" className="block w-full">
-          <Button variant="outline" className="w-full">ホームに戻る</Button>
+          <Button variant="outline" className="w-full my-4 h-12">ホームに戻る</Button>
         </a>
       </div>
       {toast && (
