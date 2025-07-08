@@ -29,6 +29,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <head>
+        <title>つながるん</title>
+        <meta name="description" content="学生向けマッチングプラットフォーム" />
+        <link rel="icon" href="/logo.png" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <RootLayoutClient>{children}</RootLayoutClient>
       </body>

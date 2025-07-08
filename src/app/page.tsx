@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Mail, HeartHandshake, Users, Sparkles, Star, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
 export default function Home() {
@@ -28,15 +28,11 @@ export default function Home() {
         <section className="w-full flex flex-col items-center justify-center pt-20 pb-10">
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
-              <Avatar className="w-24 h-24 shadow-xl ring-4 ring-teal-300 animate-bounce-slow">
-                <AvatarImage src="/favicon.ico" alt="つながるん" />
+              <Avatar className="w-96 h-96 shadow-xl ring-teal-300 animate-bounce-slow">
+                <AvatarImage src="/logo.png" alt="つながるん" />
                 <AvatarFallback>つな</AvatarFallback>
               </Avatar>
-              <span className="absolute -bottom-2 -right-2">
-                <Badge className="bg-teal-500 text-white px-3 py-1 text-xs rounded-full shadow">NEW</Badge>
-              </span>
             </div>
-            <h1 className="text-5xl font-extrabold text-white drop-shadow-lg tracking-tight">つながるん</h1>
             <p className="text-lg text-white font-medium text-center max-w-xl drop-shadow">
               <Sparkles className="inline-block mr-2 text-white animate-pulse" />
               新しいつながり、ここから始まる。<br />
@@ -81,7 +77,7 @@ export default function Home() {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 text-sm">
-                オンライン・オフラインの多彩なイベントで<br />
+                オフラインの多彩なイベントで<br />
                 気軽に交流・マッチングが可能です。
               </p>
             </CardContent>
@@ -93,7 +89,7 @@ export default function Home() {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 text-sm">
-                本人確認や通報機能など、<br />
+                本人確認搭載！<br />
                 安心して使える仕組みを用意しています。
               </p>
             </CardContent>
